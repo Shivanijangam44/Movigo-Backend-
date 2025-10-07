@@ -1,0 +1,12 @@
+package com.movigo.dto.seatDtos;
+
+public class SeatDto {
+	
+	private String seatNumber;
+	
+	private String seatType;
+	
+	private  boolean isAvailable ;
+	
+	private Long screenId;
+}

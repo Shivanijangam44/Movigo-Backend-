@@ -1,0 +1,12 @@
+package com.movigo.service;
+
+import java.util.List;
+
+import com.movigo.dto.seatDtos.SeatAvailableDto;
+
+public interface SeatService {
+	
+	public List<SeatAvailableDto> getAvailableSeatsByScreenId(Long screenId);
+	
+	
+}

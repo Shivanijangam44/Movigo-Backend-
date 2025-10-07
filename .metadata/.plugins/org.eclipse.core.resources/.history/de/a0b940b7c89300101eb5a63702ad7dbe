@@ -1,0 +1,69 @@
+package com.movigo.service;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.movigo.dao.ScreenDao;
+import com.movigo.dao.TheaterDao;
+import com.movigo.dto.screenDtos.ScreenDto;
+import com.movigo.dto.screenDtos.ScreenUpdateDto;
+import com.movigo.entity.Screen;
+import com.movigo.entity.Theater;
+import com.movigo.exceptions.BusinessException;
+
+@Service
+@Transactional
+public class ScreenServiceImpl implements ScreenService{
+	
+	@Autowired
+	private ScreenDao screenDao;
+	
+	@Autowired 
+	private TheaterDao theaterDao;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	@Override
+	public ScreenDto addScreen(ScreenDto screenDto) {
+		Theater theater = theaterDao.findById(screenDto.getTheaterId())
+		        .orElseThrow(() -> new BusinessException(
+		            "Theater not found for Id : " + screenDto.getTheaterId()
+		        ));
+
+		Screen screen = new Screen();
+		screen.setScreenName(screenDto.getScreenName());
+		screen.setTotalSeats(screenDto.getTotalSeats());
+		screen.setTheater(theater);
+			
+		Screen savedScreen = screenDao.save(screen);
+		
+		ScreenDto dto = modelMapper.map(savedScreen,ScreenDto.class);
+		dto.setTheaterId(savedScreen.getTheater().getTheaterId());
+			
+		return dto ;
+	}
+
+	@Override
+	public void deleteScreen(Long screenId) {
+		
+		
+	}
+
+	@Override
+	public List<ScreenDto> getAllScreens() {
+		
+		return null;
+	}
+
+	@Override
+	public List<ScreenDto> updateScreenDetails(List<ScreenUpdateDto> screenUpdateDto, Long screenId) {
+		
+		return null;
+	}
+	
+}

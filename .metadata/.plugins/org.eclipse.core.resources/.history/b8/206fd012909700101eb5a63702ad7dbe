@@ -1,0 +1,5 @@
+package com.movigo.entity;
+
+public class SeatTypeRule {
+
+}

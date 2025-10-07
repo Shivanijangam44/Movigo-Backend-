@@ -1,0 +1,7 @@
+package com.movigo.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SeatTypeRuleDao extends JpaRepository<SeatTypeRule, Long>{
+
+}

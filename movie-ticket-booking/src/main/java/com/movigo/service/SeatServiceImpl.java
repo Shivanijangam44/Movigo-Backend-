@@ -1,0 +1,68 @@
+package com.movigo.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.movigo.dao.SeatDao;
+import com.movigo.dto.seatDtos.SeatAvailableDto;
+import com.movigo.dto.seatDtos.SeatDto;
+import com.movigo.entity.Seat;
+
+@Service
+@Transactional
+public class SeatServiceImpl implements SeatService{
+
+	@Autowired 
+	private SeatDao seatDao;
+	
+	@Autowired
+	private ModelMapper modelmapper;
+	
+	@Override
+	public List<SeatAvailableDto> getAvailableSeatsByScreenId(Long screenId) {
+	    
+		return seatDao.findAvailableSeatsByScreenId(screenId);
+	}
+
+	@Override
+	public List<SeatDto> getSeatsByScreen(Long screenId) {
+		List<SeatDto> seatDtoList = new ArrayList<>();
+		List<Seat> list = seatDao.findByScreenId(screenId);
+		
+		list.forEach(element -> {
+			SeatDto dto = modelmapper.map(element, SeatDto.class);
+			seatDtoList.add(dto);
+		});
+		return seatDtoList ;
+	}
+
+	@Override
+	public SeatDto updateSeat(Long seatId, Long screenId) {
+		
+		return null;
+	}
+
+	@Override
+	public void deleteSeat(Long seatId) {
+	
+		
+	}
+
+	@Override
+	public SeatDto bookSeat(Long seatId) {
+		
+		return null;
+	}
+
+	@Override
+	public SeatDto cancelSeat(Long seatId) {
+		
+		return null;
+	}
+
+}

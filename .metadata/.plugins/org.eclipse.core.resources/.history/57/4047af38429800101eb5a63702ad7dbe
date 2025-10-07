@@ -1,0 +1,11 @@
+package com.movigo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.movigo.dao.SeatTypeRuleDao;
+
+public class SeatTypeRuleSeriveImpl implements SeatTypeRuleService{
+
+	@Autowired 
+	private SeatTypeRuleDao seatTypeRuleDao;
+}

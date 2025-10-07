@@ -1,0 +1,14 @@
+package com.movigo.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.movigo.entity.Seat;
+
+public interface SeatDao extends JpaRepository<Seat, Long>{
+
+	@Query("SELECT s from Seat s WHERE s.screen.screenId = :screenId ")
+	List<Seat> findByScreenId(Long screenId);
+}

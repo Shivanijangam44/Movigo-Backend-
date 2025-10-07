@@ -1,0 +1,51 @@
+package com.movigo.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.movigo.dto.seatDtos.SeatAvailableDto;
+import com.movigo.dto.seatDtos.SeatDto;
+
+@Service
+@Transactional
+public class SeatServiceImpl implements SeatService{
+
+	@Override
+	public List<SeatAvailableDto> getAvailableSeatsByScreenId(Long screenId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SeatDto> getSeatsByScreen(Long screenId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SeatDto updateSeat(Long seatId, Long screenId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteSeat(Long seatId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public SeatDto bookSeat(Long seatId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SeatDto cancelSeat(Long seatId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

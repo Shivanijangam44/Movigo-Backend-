@@ -1,0 +1,27 @@
+package com.movigo.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.movigo.dao.SeatTypeRuleDao;
+import com.movigo.entity.Screen;
+import com.movigo.entity.Seat;
+
+public class SeatTypeRuleSeriveImpl implements SeatTypeRuleService{
+
+	@Autowired 
+	private SeatTypeRuleDao seatTypeRuleDao;
+
+	@Override
+	public String getSeatTypeForRow(char row) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Seat> generateSeatsForScreen(Screen screen) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

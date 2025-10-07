@@ -1,0 +1,5 @@
+package com.movigo.controller;
+
+public class SeatController {
+
+}

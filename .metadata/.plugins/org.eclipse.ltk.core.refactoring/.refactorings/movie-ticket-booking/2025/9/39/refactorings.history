@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.movigo.dto.seatDtos.SeatDto&apos; to &apos;SeatAvailableDto&apos;&#x0D;&#x0A;- Original project: &apos;movie-ticket-booking&apos;&#x0D;&#x0A;- Original element: &apos;com.movigo.dto.seatDtos.SeatDto&apos;&#x0D;&#x0A;- Renamed element: &apos;com.movigo.dto.seatDtos.SeatAvailableDto&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;SeatDto&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.movigo.dto.seatDtos{SeatDto.java[SeatDto" matchStrategy="1" name="SeatAvailableDto" qualified="false" references="true" similarDeclarations="false" stamp="1758804748532" textual="false" version="1.0"/>
+</session>

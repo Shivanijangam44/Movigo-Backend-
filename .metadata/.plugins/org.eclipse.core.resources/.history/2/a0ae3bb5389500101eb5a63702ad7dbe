@@ -1,0 +1,102 @@
+package com.movigo.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.movigo.dao.ScreenDao;
+import com.movigo.dao.TheaterDao;
+import com.movigo.dto.screenDtos.ScreenDto;
+import com.movigo.dto.screenDtos.ScreenUpdateDto;
+import com.movigo.entity.Screen;
+import com.movigo.entity.Theater;
+import com.movigo.exceptions.BusinessException;
+
+@Service
+@Transactional
+public class ScreenServiceImpl implements ScreenService{
+	
+	@Autowired
+	private ScreenDao screenDao;
+	
+	@Autowired 
+	private TheaterDao theaterDao;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	@Override
+	public ScreenDto addScreen(ScreenDto screenDto) {
+		Theater theater = theaterDao.findById(screenDto.getTheaterId())
+		        .orElseThrow(() -> new BusinessException(
+		            "Theater not found for Id : " + screenDto.getTheaterId()
+		        ));
+		
+		int currentScreens = screenDao.countScreensByTheaterId(theater.getTheaterId());
+		if(currentScreens >= theater.getTotalScreens()) {
+			throw new BusinessException("Cannot add more screens. Theater already reached its max screen capacity of "+theater.getTotalScreens());
+		}
+		Screen screen = new Screen();
+		screen.setScreenName(screenDto.getScreenName());
+		screen.setTotalSeats(screenDto.getTotalSeats());
+		screen.setTheater(theater);
+			
+		Screen savedScreen = screenDao.save(screen);
+		
+		ScreenDto dto = modelMapper.map(savedScreen,ScreenDto.class);
+		dto.setTheaterId(savedScreen.getTheater().getTheaterId());
+			
+		return dto ;
+	}
+
+	@Override
+	public void deleteScreen(Long screenId) {
+		if(!screenDao.existsById(screenId)) {
+			throw new BusinessException("Screen not found for Id "+screenId);
+		}
+		
+		screenDao.deleteById(screenId);
+		
+	}
+
+	@Override
+	public ScreenDto updateScreenDetails(List<ScreenUpdateDto> screenUpdateDto, Long screenId) {
+		Optional<Screen> optionalScreen = screenDao.findById(screenId);
+		
+		Screen screen = optionalScreen.orElse(null);
+		
+		if(screen != null) {
+			screenUpdateDto.forEach(element ->{
+				if("screenName".equals(element.getFieldName())) {
+					screen.setScreenName(element.getValue());
+				}
+				else if("totalSeats".equals(element.getFieldName())) {
+					screen.setTotalSeats(Integer.parseInt(element.getValue()));
+				}
+				else if("theaterId".equals(element.getFieldName())) {
+					Long theaterId = Long.parseLong(element.getValue());
+					
+					Theater theater = theaterDao.findById(theaterId)
+							.orElseThrow(() -> new BusinessException("Theater not found for Id "+ theaterId));
+					
+					screen.setTheater(theater);
+				}
+			});
+			
+			ScreenDto dto = modelMapper.map(screenDao.save(screen), ScreenDto.class);
+			
+		}
+		return dto;
+	}
+
+	@Override
+	public List<ScreenDto> getAllScreensByTheateId() {
+
+		return null;
+	}
+	
+}

@@ -1,0 +1,5 @@
+package com.movigo.dto.seatDtos;
+
+public class SeatDto {
+
+}
