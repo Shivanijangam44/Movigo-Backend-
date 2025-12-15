@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.movigo.dto.seatDtos.SeatAvailableDto;
 import com.movigo.dto.seatDtos.SeatDto;
+import com.movigo.dto.seatDtos.SeatUpdateDto;
 
 public interface SeatService {
 	
@@ -11,7 +12,7 @@ public interface SeatService {
 	
 	public List<SeatDto> getSeatsByScreen(Long screenId);
 	
-	public SeatDto updateSeat(Long seatId, Long screenId);
+	public SeatDto updateSeat(List<SeatUpdateDto> seatUpdateDto,Long seatId);
 	
 	public void deleteSeat(Long seatId);
 	
