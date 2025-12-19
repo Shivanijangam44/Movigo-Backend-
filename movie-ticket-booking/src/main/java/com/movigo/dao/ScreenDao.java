@@ -12,6 +12,6 @@ public interface ScreenDao extends JpaRepository<Screen, Long>{
 	@Query("SELECT COUNT(s) from Screen s WHERE s.theater.theaterId = :theaterId")
 	int countScreensByTheaterId( Long theaterId);
 	
-	@Query("SELECT s from Screen s WHERE s.theater.theaterId = :theaterId")
-	List<Screen> findByTheaterId(Long theaterId);
+	
+	List<Screen> findByTheaterTheaterId(Long theaterId);
 }

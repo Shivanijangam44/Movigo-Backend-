@@ -9,12 +9,9 @@ import com.movigo.entity.Movie;
 
 public interface MovieDao extends JpaRepository<Movie, Long> {
 	
-	@Query("SELECT m FROM Movie m where m.movieName = :movieName")
 	List<Movie> findByMovieName(String movieName);
 	
-	@Query("SELECT m FROM Movie m where m.genre = :genre")
 	List<Movie> findByGenre(String genre);
 
-	@Query("SELECT m FROM Movie m where m.language = :language")
 	List<Movie> findByLanguage(String language);
 }

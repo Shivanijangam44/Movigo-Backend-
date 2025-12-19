@@ -41,7 +41,7 @@ public class SeatServiceImpl implements SeatService{
 	@Override
 	public List<SeatDto> getSeatsByScreen(Long screenId) {
 		List<SeatDto> seatDtoList = new ArrayList<>();
-		List<Seat> list = seatDao.findByScreenId(screenId);
+		List<Seat> list = seatDao.findByScreenScreenId(screenId);
 		
 		list.forEach(element -> {
 			SeatDto dto = modelmapper.map(element, SeatDto.class);

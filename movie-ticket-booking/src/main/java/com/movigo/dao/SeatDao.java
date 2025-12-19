@@ -10,8 +10,8 @@ import com.movigo.entity.Seat;
 
 public interface SeatDao extends JpaRepository<Seat, Long>{
 
-	@Query("SELECT s from Seat s WHERE s.screen.screenId = :screenId ")
-	List<Seat> findByScreenId(Long screenId);
+
+	List<Seat> findByScreenScreenId(Long screenId);
 	
 	@Query("SELECT new com.movigo.dto.seatDtos.SeatAvailableDto(s.seatNumber, s.seatType) FROM Seat s WHERE s.screen.screenId = :screenId AND s.isAvailable = true")
 	List<SeatAvailableDto> findAvailableSeatsByScreenId(Long screenId);

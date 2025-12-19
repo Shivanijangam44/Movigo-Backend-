@@ -98,7 +98,7 @@ public class ScreenServiceImpl implements ScreenService{
 	@Override
 	public List<ScreenDto> getAllScreensByTheateId(Long theaterId) {
         List <ScreenDto> screenDtoList = new ArrayList<>();
-        List<Screen> screenList = screenDao.findByTheaterId(theaterId);
+        List<Screen> screenList = screenDao.findByTheaterTheaterId(theaterId);
         
         screenList.forEach(item ->{
         	ScreenDto screenDto = modelMapper.map(item, ScreenDto.class);
