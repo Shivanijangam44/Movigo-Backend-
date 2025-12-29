@@ -2,6 +2,8 @@ package com.movigo.dto.showDtos;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ public class ShowDto {
 	
 	private Long showId;
 	
+	@JsonFormat(pattern = "hh:mm a")
 	private LocalDateTime showTime;
 	
 	private Long movieId;

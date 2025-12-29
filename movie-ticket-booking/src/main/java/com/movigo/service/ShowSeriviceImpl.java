@@ -1,11 +1,11 @@
 package com.movigo.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +14,7 @@ import com.movigo.dao.ScreenDao;
 import com.movigo.dao.ShowDao;
 import com.movigo.dto.showDtos.ShowCreateDto;
 import com.movigo.dto.showDtos.ShowDto;
+import com.movigo.dto.showDtos.ShowUpdateDto;
 import com.movigo.entity.Movie;
 import com.movigo.entity.Screen;
 import com.movigo.entity.Show;
@@ -69,12 +70,6 @@ public class ShowSeriviceImpl implements ShowService {
 	}
 
 	@Override
-	public ShowDto updateShow() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<ShowDto> getShowByMovie(String movieName) {
 		List<ShowDto> showDtoList = new ArrayList<>();
 		List<Show> showList = showDao.findByMovieMovieName(movieName);
@@ -106,8 +101,50 @@ public class ShowSeriviceImpl implements ShowService {
 
 	@Override
 	public List<ShowDto> getShowByScreen(Long screenId) {
+		List<ShowDto> showDtoList = new ArrayList<>();
 		
-		return null;
+		List<Show> showList = showDao.findByScreenScreenId(screenId);
+		
+		showList.forEach(show -> {
+			ShowDto showDto = modelmapper.map(show,ShowDto.class);
+			showDto.setMovieId(show.getMovie().getMovieId());
+			showDto.setMovieName(show.getMovie().getMovieName());
+			showDto.setScreenId(show.getScreen().getScreenId());
+			showDtoList.add(showDto);
+	       
+		});
+				
+		return showDtoList;
+	}
+
+	@Override
+	public ShowDto updateShow(List<ShowUpdateDto> showUpdateDto, Long showId) {
+		Show show = showDao.findById(showId)
+				.orElseThrow(() -> new BusinessException("Show not found for Id "+showId));
+		
+		showUpdateDto.forEach(item -> {
+			if("showTime".equals(item.getFieldName())){
+			show.setShowTime(LocalDateTime.parse(item.getValue()));
+			} else if("movieId".equals(item.getFieldName())) {
+				Long movieId = Long.parseLong(item.getValue());
+			    Movie movie = movieDao.findById(movieId)
+					.orElseThrow(() -> new BusinessException("Movie not found for Id "+movieId));
+			    show.setMovie(movie);
+			} else if("screenId".equals(item.getFieldName())) {
+				Long screenId = Long.parseLong(item.getValue());
+				Screen screen =screenDao.findById(screenId)
+					.orElseThrow(() -> new BusinessException("Screen not found for Id "+screenId));
+				show.setScreen(screen);
+			} else {
+				throw new BusinessException("Invalid field name "+item.getFieldName());
+			}
+		});
+		Show savedShow = showDao.save(show);
+		ShowDto dto = modelmapper.map(savedShow, ShowDto.class);
+		dto.setMovieId(savedShow.getMovie().getMovieId());
+		dto.setMovieName(savedShow.getMovie().getMovieName());
+		dto.setScreenId(savedShow.getScreen().getScreenId());
+		return dto;
 	}
 
 }

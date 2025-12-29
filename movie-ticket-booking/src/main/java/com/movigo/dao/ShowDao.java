@@ -9,7 +9,9 @@ import com.movigo.entity.Show;
 
 public interface ShowDao extends JpaRepository<Show, Long> {
 	
-	//@Query("SELECT s from Show s WHERE s.movie.movieName = :movieName")
+
 	List<Show> findByMovieMovieName(String movieName);
+	
+	List<Show> findByScreenScreenId(Long screenId);
 
 }
